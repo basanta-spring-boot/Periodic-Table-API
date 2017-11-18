@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Periodic Table</title>
+<style type="text/css">
+table {
+	width: 100%;
+	max-width: 1009px;
+	height: 112px;
+	border-collapse: collapse;
+	border: 1px solid #38678f;
+	margin: 50px auto;
+	background: #eef2f5;
+}
+
+th {
+	background: steelblue;
+	height: 54px;
+	width: 0%;
+	font-weight: lighter;
+	text-shadow: 0 1px 0 #38678f;
+	color: white;
+	border: 1px solid #38678f;
+	box-shadow: inset 0px 1px 2px #568ebd;
+	transition: all 0.2s;
+}
+
+tr {
+	border-bottom: 1px solid #cccccc;
+}
+
+tr:last-child {
+	border-bottom: 0px;
+}
+
+td {
+	border-right: 1px solid #cccccc;
+	padding: 7px;
+	transition: all 0.2s;
+	text-align: center;
+	color: navy;
+}
+
+td:last-child {
+	border-right: 0px;
+}
+
+td.selected {
+	background: #d7e4ef;
+	z-index:;
+}
+
+td input {
+	font-size: 14px;
+	background: none;
+	outline: none;
+	border: 0;
+	display: table-cell;
+	height: 100%;
+	width: 100%;
+}
+
+td input:focus {
+	box-shadow: 0 1px 0 steelblue;
+	color: steelblue;
+}
+
+::-moz-selection {
+	background: steelblue;
+	color: white;
+}
+
+::selection {
+	background: steelblue;
+	color: white;
+}
+
+.heavyTable {
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+	animation: float 5s infinite;
+}
+
+.main {
+	max-width: 1301px;
+	padding: 0px;
+	margin: auto;
+	padding: 0px;
+}
+
+.content {
+	color: white;
+	text-align: center;
+}
+
+.content p, .content pre, .content h2 {
+	text-align: left;
+}
+
+h1 {
+	text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: rgb(18, 18, 19);
+	font-family: "Open Sans", arial;
+}
+</style>
+</head>
+<body>
+	<h1
+		style="text-align: center; font-style: italic; font-weight: bold; color: #ececed;">
+		All Atomic Details of <strong style="color: red;">(112)</strong>
+		Elements
+	</h1>
+	<div class='main'>
+		<table class="heavyTable">
+			<thead>
+				<tr>
+					<th>Atomic Number</th>
+					<th>Element Name</th>
+					<th>Symbol</th>
+					<th>Atomic Weight</th>
+					<th>Boiling Point</th>
+					<th>Ionisation Potential</th>
+					<th>Eletro Negativity</th>
+					<th>Atomic Radius</th>
+					<th>Melting Point</th>
+					<th>Density</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="response : *{responses}">
+					<td th:text="${response.atomicNumber}"></td>
+					<td th:text="${response.elementName}"></td>
+					<td th:text="${response.symbol}"></td>
+					<td th:text="${response.atomicWeight}"></td>
+					<td th:text="${response.boilingPoint}"></td>
+					<td th:text="${response.ionisationPotential}"></td>
+					<td th:text="${response.eletroNegativity}"></td>
+					<td th:text="${response.atomicRadius}"></td>
+					<td th:text="${response.meltingPoint}"></td>
+					<td th:text="${response.density}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

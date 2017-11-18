@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Periodic Table</title>
+<link rel="stylesheet" th:href="@{/css/normalize.css}" />
+<link rel="stylesheet" th:href="@{/css/demo.css}" />
+<link rel="stylesheet" th:href="@{/css/cs-select.css}" />
+<link rel="stylesheet" th:href="@{/css/cs-skin-border.css}" />
+<script type="text/javascript" th:src="@{/js/classie.js}"></script>
+<script type="text/javascript" th:src="@{/js/selectFx.js}"></script>
+<style type="text/css">
+#myButton {
+	background: green;
+	display: block;
+	padding: 15px 35px;
+	float: right;
+	top: 56%;
+	right: 46%;
+	color: white;
+	position: absolute;
+	transition: .5s ease;
+	text-decoration: none;
+	font-weight: bold;
+	text-shadow: 0 0 10px #000;
+	border-top: 1px solid rgb(200, 250, 100);
+	font-size: 20px;
+	-webkit-box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3)
+		0 -2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(0, 50, 0, .75) 0 0
+		40px inset;
+	-moz-box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0
+		-2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(0, 50, 0, .75) 0 0
+		40px inset;
+	box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0 -2px
+		1px, rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(0, 50, 0, .75) 0 0 40px
+		inset;
+	border-radius: 12px;
+	background: #bfd255;
+	background: -webkit-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%,
+		#9ecb2d 100%);
+	background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d
+		100%);
+	background: -ms-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d
+		100%);
+	background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d
+		100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255',
+		endColorstr='#9ecb2d', GradientType=0);
+	background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d
+		100%);
+	right: 44%;
+	transition: .5s ease;
+}
+
+/* all about table */
+table {
+	width: 100%;
+	max-width: 805px;
+	height: 112px;
+	border-collapse: collapse;
+	border: 1px solid #38678f;
+	margin: 50px auto;
+	background: #eef2f5;
+}
+
+th {
+	background: steelblue;
+	height: 54px;
+	width: 0%;
+	font-weight: lighter;
+	text-shadow: 0 1px 0 #38678f;
+	color: white;
+	border: 1px solid #38678f;
+	box-shadow: inset 0px 1px 2px #568ebd;
+	transition: all 0.2s;
+}
+
+tr {
+	border-bottom: 1px solid #cccccc;
+}
+
+tr:last-child {
+	border-bottom: 0px;
+}
+
+td {
+	border-right: 1px solid #cccccc;
+	padding: 10px;
+	transition: all 0.2s;
+	text-align: center;
+	color: navy;
+}
+
+td:last-child {
+	border-right: 0px;
+}
+
+td.selected {
+	background: #d7e4ef;
+	z-index:;
+}
+
+td input {
+	font-size: 14px;
+	background: none;
+	outline: none;
+	border: 0;
+	display: table-cell;
+	height: 100%;
+	width: 100%;
+}
+
+td input:focus {
+	box-shadow: 0 1px 0 steelblue;
+	color: steelblue;
+}
+
+::-moz-selection {
+	background: steelblue;
+	color: white;
+}
+
+::selection {
+	background: steelblue;
+	color: white;
+}
+
+.heavyTable {
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+	animation: float 5s infinite;
+}
+
+.main {
+	max-width: 962px;
+	padding: 10px;
+	margin: auto;
+}
+
+.content {
+	color: white;
+	text-align: center;
+}
+
+.content p, .content pre, .content h2 {
+	text-align: left;
+}
+
+h1 {
+	text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+a:hover {
+	color: blue;
+}
+</style>
+</head>
+<body class="demo-1">
+
+	<div class="container">
+
+		<header class="codrops-header">
+			<h1>
+				<span>PERIODIC TABLE</span>Select Atomic Elements <br /> <span
+					th:text="'From
+					Below Drop down ('+${size}+')'"></span> <span><a
+					th:href="@{'/periodicTable/viewFullTable'}"
+					style="text-decoration: none; color: white; font-size: small; cursor: pointer;">Click
+						here to view (Complete periodic Table)</a></span>
+			</h1>
+		</header>
+		<form action="/periodicTable/getAtomInfo">
+			<section>
+				<select class="cs-select cs-skin-border" name="element">
+					<option value="error" selected="selected">Select Element</option>
+					<option th:each="item : *{response.list}" th:value="${item}"
+						th:text="${item}" />
+				</select><input type="submit" value="SEARCH" id="myButton"
+					style="height: 52px; width: 150px; text-align: center;" />
+
+			</section>
+		</form>
+		<br />
+		<div class='main'>
+			<table class="heavyTable" th:each="list : *{dummylist}">
+				<thead>
+					<tr>
+						<th>Atomic Number</th>
+						<th>Element Name</th>
+						<th>Symbol</th>
+						<th>Atomic Weight</th>
+						<th>Boiling Point</th>
+						<th>Ionisation Potential</th>
+						<th>Eletro Negativity</th>
+						<th>Atomic Radius</th>
+						<th>Melting Point</th>
+						<th>Density</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${response.atomicNumber}"></td>
+						<td th:text="${response.elementName}"></td>
+						<td th:text="${response.symbol}"></td>
+						<td th:text="${response.atomicWeight}"></td>
+						<td th:text="${response.boilingPoint}"></td>
+						<td th:text="${response.ionisationPotential}"></td>
+						<td th:text="${response.eletroNegativity}"></td>
+						<td th:text="${response.atomicRadius}"></td>
+						<td th:text="${response.meltingPoint}"></td>
+						<td th:text="${response.density}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- Related demos -->
+		<section class="related"></section>
+	</div>
+	<script th:inline="javascript">
+		(function() {
+			[].slice.call(document.querySelectorAll('select.cs-select'))
+					.forEach(function(el) {
+						new SelectFx(el);
+					});
+		})();
+	</script>
+</body>
+</html>
